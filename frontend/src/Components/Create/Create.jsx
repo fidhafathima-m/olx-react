@@ -66,6 +66,7 @@ const Create = () => {
     <Fragment>
       <Header />
       <div className="centerDiv">
+        <h2>Add a product</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
           <br />

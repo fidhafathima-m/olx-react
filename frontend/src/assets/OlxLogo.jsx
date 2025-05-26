@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default  function OlxLogo() {
+export default  function OlxLogo({onClick}) {
     return(  
           <svg
         width="48px"
@@ -9,6 +9,7 @@ export default  function OlxLogo() {
         data-aut-id="icon"
         className
         fillRule="evenodd"
+        onClick={onClick}
       >
         <path
           className="rui-77aaa"

@@ -17,8 +17,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false
     },
+     favorites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  }]
 }, {
     timestamps: true
 });

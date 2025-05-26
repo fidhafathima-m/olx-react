@@ -1,50 +1,87 @@
 .viewParentDiv {
-  padding-top: 4em;
   display: flex;
-}
-.viewParentDiv .imageShowDiv {
-  padding: 16px;
-  width: 70vw;
-}
-.viewParentDiv .imageShowDiv img {
-  width: 65vw;
-  height: 85vh;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 120px 20px 40px; /* offset for fixed header */
+  gap: 30px;
+  box-sizing: border-box;
 }
 
-.viewParentDiv .rightSection {
-  padding: 16px;
-  margin-top: 3em;
-  width: 30vw;
-}
-
-.viewParentDiv .rightSection .productDetails :first-child {
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #002f34;
-  font-size: 34px;
-  line-height: 32px;
-  margin-bottom: 20px;
-}
-
-.viewParentDiv .rightSection .productDetails {
-  border: 1px solid black;
-  padding: 6px;
+/* Image Section */
+.imageShowDiv {
+  flex: 1 1 500px;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  background-color: #fff;
   border-radius: 6px;
-  margin-bottom: 2em;
+  padding: 10px;
+}
+
+.imageShowDiv img {
   width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 
-.viewParentDiv .rightSection .contactDetails {
-  border: 1px solid black;
-  padding: 6px;
+/* Right Section: Product and Contact Details */
+.rightSection {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Product Details Box */
+.productDetails,
+.contactDetails {
+  padding: 20px;
+  border: 1px solid #ccc;
   border-radius: 6px;
+  background-color: #f9f9f9;
 }
 
-.viewParentDiv .rightSection .contactDetails :first-child {
+.productDetails p {
   font-size: 20px;
-  line-height: 24px;
-  font-weight: 700;
+  font-weight: bold;
   color: #002f34;
-  font-weight: 400;
-  padding: 0;
+  margin: 0 0 10px;
+}
+
+.productDetails span {
+  display: block;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* Contact Info */
+.contactDetails p {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.contactDetails p:first-child {
+  font-weight: bold;
+  font-size: 18px;
+  color: #002f34;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .viewParentDiv {
+    flex-direction: column;
+    padding: 100px 15px 30px;
+  }
+
+  .imageShowDiv,
+  .rightSection {
+    max-width: 100%;
+  }
 }

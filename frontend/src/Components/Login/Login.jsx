@@ -47,12 +47,13 @@ function Login() {
     if(!validate()) return;
 
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
         method: 'POST',
         headers: {'Content-type': 'application/json'}, 
         body: JSON.stringify(user),
       })
       const data = await res.json();
+      console.log('data: ', data)
 
       if(data.success) {
         login(data.data);
@@ -68,7 +69,7 @@ function Login() {
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} onClick={() => navigate('/')}></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Email</label>
           <br />

@@ -7,7 +7,7 @@ export const useProductStore = create((set) => ({
         if (!newProduct.name || !newProduct.image || !newProduct.price || !newProduct.category) {
             return { success: false, message: "please fill in all fields" }
         }
-        const res = await fetch("/api/products", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -19,7 +19,7 @@ export const useProductStore = create((set) => ({
         return { success: true, message: "prodcut created successfully" }
     },
     fetchProducts: async () => {
-        const respnse = await fetch("/api/products");
+        const respnse = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
         const data = await respnse.json()
         set({ products: data.data })
     }

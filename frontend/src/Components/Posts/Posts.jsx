@@ -9,7 +9,7 @@ function Posts() {
 
   const fetchProducts = useProductStore((state) => state.fetchProducts)
   const products = useProductStore((state) => state.products)
-  const {addProduct} = usePost()
+  const {addPost} = usePost()
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts])
@@ -25,7 +25,7 @@ function Posts() {
           {products.map(product => (
             <div
             className="card"
-            onClick={() => addProduct(product)}
+            onClick={() => addPost(product)}
             key={product._id}
           >
           

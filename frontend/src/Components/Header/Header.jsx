@@ -7,14 +7,15 @@ import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function Header() {
   const {user, logout} = useAuth()
+  const navigate = useNavigate()
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
         <div className="brandName">
-          <OlxLogo></OlxLogo>
+          <OlxLogo onClick={() => navigate('/')}/>
         </div>
         <div className="placeSearch">
           <Search></Search>
@@ -54,7 +55,7 @@ function Header() {
           </div>
         )}
 
-        <div className="sellMenu">
+        {user && <div className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
@@ -63,6 +64,8 @@ function Header() {
             </Link>
           </div>
         </div>
+        }
+        
       </div>
     </div>
   );

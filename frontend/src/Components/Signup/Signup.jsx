@@ -64,7 +64,7 @@ export default function Signup() {
     e.preventDefault();
     if(!validate()) return;
 
-    const res = await fetch('/api/signup', {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/signup`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(signup)
@@ -85,7 +85,7 @@ export default function Signup() {
   return (
     <div>
       <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} onClick={() => navigate('/')}></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
