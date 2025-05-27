@@ -18,6 +18,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    sellerName: {
+        type: String,
+        required: true
+    },
+    sellerPhone: {
+        type: String,
+        required: true
+    }
 }, {
     timestamps: true,
 });

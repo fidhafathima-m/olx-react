@@ -2,11 +2,9 @@ import React from 'react';
 
 import './View.css';
 import { usePost } from '../../context/postContext';
-import { useAuth } from '../../context/auth';
 
 function View() {
-  const {post} = usePost();
-  const {user} = useAuth()
+  const { post } = usePost();
 
   return (
     <div className="viewParentDiv">
@@ -25,8 +23,8 @@ function View() {
         </div>
         <div className="contactDetails">
           <p>Seller details</p>
-          <p>{user ? user.name : 'unknown'}</p>
-          <p>{user ? user.phone : 'unknown'}</p>
+          <p>{post.sellerName}</p>
+          <p>{post.sellerPhone}</p> 
         </div>
       </div>
     </div>

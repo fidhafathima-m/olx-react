@@ -80,19 +80,24 @@ app.get("/api/products", async (req, res) => {
 
 app.post("/api/products", async (req, res) => {
   const productData = req.body;
-  if (!productData.name || !productData.category || !productData.image || !productData.price) {
-    return res.status(406).json({ success: false, message: "All product fields are required" })
+
+  // Check if all required fields are present
+  if (!productData.name || !productData.category || !productData.image || !productData.price || !productData.sellerName || !productData.sellerPhone) {
+    return res.status(406).json({ success: false, message: "All product fields are required" });
   }
+
   try {
-    const newProduct = new Product(productData);
+    const newProduct = new Product({
+      ...productData
+    });
     await newProduct.save();
-    return res.status(201).json({ 
-      success: true, 
-      data: newProduct, 
-      message: "Product created successfully" 
+    return res.status(201).json({
+      success: true,
+      data: newProduct,
+      message: "Product created successfully"
     });
   } catch (error) {
-    console.error("Error: ", error.message);
+    console.error("Error in creating product: ", error.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 });

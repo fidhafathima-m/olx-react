@@ -3,64 +3,74 @@ import './Create.css';
 import Header from '../Header/Header';
 import { useProductStore } from '../../store/product';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/auth'; // Import the useAuth hook
 
 const Create = () => {
   const [post, setPost] = useState({
     name: '', category: '', price: '', image: ''
-  })
+  });
 
   const [errors, setErrors] = useState({
     name: '', category: '', price: '', image: ''
-  })
+  });
+
+  const { user } = useAuth(); // Get the current user from AuthContext
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setPost(prev => ({...prev, [name]: value}));
-    setErrors(prev => ({...prev, [name]: ''}))
-  }
+    const { name, value } = e.target;
+    setPost(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
+  };
 
   const validate = () => {
     let isValid = true;
     let newErrors = {
       name: '', category: '', price: '', image: ''
-    }
-    if(!post.name.trim()) {
+    };
+    if (!post.name.trim()) {
       newErrors.name = 'Product name is required';
       isValid = false;
     }
-    if(!post.category.trim()) {
-      newErrors.name = 'Category is required';
+    if (!post.category.trim()) {
+      newErrors.category = 'Category is required'; // Fixed the error key
       isValid = false;
     }
-    if(!post.price.trim()) {
-      newErrors.name = 'Price is required';
+    if (!post.price.trim()) {
+      newErrors.price = 'Price is required';
       isValid = false;
-    } else if(isNaN(post.price) || Number(post.price) <= 0) {
-      newErrors.price = 'Price must be a positive number'
-      isValid = false
+    } else if (isNaN(post.price) || Number(post.price) <= 0) {
+      newErrors.price = 'Price must be a positive number';
+      isValid = false;
     }
-    if(!post.image.trim()) {
-      newErrors.name = 'Image is required';
+    if (!post.image.trim()) {
+      newErrors.image = 'Image is required'; // Fixed the error key
       isValid = false;
     }
     setErrors(newErrors);
     return isValid;
-  }
+  };
 
-  const createProduct = useProductStore(state => state.createProduct)
+  const createProduct = useProductStore(state => state.createProduct);
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!validate()) return;
+    if (!validate()) return;
 
-    const res = await createProduct(post);
-    if(res.success) {
+    // Use the user data from AuthContext
+    const productData = {
+      ...post,
+      sellerName: user.name, // Add seller's name
+      sellerPhone: user.phone // Add seller's phone
+    };
+
+    const res = await createProduct(productData);
+    if (res.success) {
       navigate('/');
     } else {
       alert(res.message);
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -134,7 +144,6 @@ const Create = () => {
         </form>
       </div>
     </Fragment>
-
   );
 };
 
