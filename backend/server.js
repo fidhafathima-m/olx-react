@@ -16,6 +16,10 @@ app.post('/api/signup', async (req, res) => {
         return res.status(406).json({success: false, message: 'All fields are required'});
     }
     try {
+      const existingUser = await User.findOne({email: userData.email});
+      if(existingUser) {
+        return res.status(406).json({success: false, message: 'Email id already exists. Please login'});
+      }
         const newUser = new User(userData);
         await newUser.save();
         

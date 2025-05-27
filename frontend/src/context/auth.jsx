@@ -22,7 +22,7 @@ export function AuthProvider({children}) {
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');
-        navigate('/signup');
+        navigate('/login');
     }
 
     return (
