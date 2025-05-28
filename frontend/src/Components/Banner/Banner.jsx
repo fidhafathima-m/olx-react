@@ -21,12 +21,7 @@ function Banner() {
             <span>For Rent: Houses & Apartments</span>
           </div>
         </div>
-        {/* <div className="banner">
-          <img
-            src="../../../Images/banner copy.png"
-            alt="OLX Banner"
-          />
-        </div> */}
+        
       </div>
     </div>
   );

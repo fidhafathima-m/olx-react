@@ -12,14 +12,12 @@ export default function OlxLogo({ onClick }) {
       style={{ cursor: 'pointer' }}
     >
       <defs>
-        {/* Blue glossy gradient for the letters */}
         <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#3a77ff" />
           <stop offset="50%" stopColor="#0066cc" />
           <stop offset="100%" stopColor="#002f34" />
         </linearGradient>
         
-        {/* Gloss effect for letters */}
         <filter id="letterGloss" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
           <feSpecularLighting in="blur" surfaceScale="5" specularConstant="0.5" 
@@ -31,7 +29,6 @@ export default function OlxLogo({ onClick }) {
         </filter>
       </defs>
       
-      {/* OLX letters with glossy blue effect */}
       <g filter="url(#letterGloss)">
         <path
           fill="url(#blueGradient)"

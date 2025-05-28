@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
-import Logo from '../../olx-logo.png';
 import OlxLogo from '../../assets/OlxLogo'
 import './Login.css'
 
@@ -63,11 +62,9 @@ function Login() {
 
   return (
     <div className="login-container">
-      {/* Header */}
       <div className="login-header">
         <div className="header-content">
           <div className="logo-section" onClick={() => navigate('/')}>
-            {/* Use your OlxLogo component with light styling for header */}
             <div className="header-logo">
               <OlxLogo onClick={() => navigate('/')} />
             </div>
@@ -75,7 +72,6 @@ function Login() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="login-main">
         <div className="login-card">
           <div className="login-form-container">

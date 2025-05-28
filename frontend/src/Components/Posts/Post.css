@@ -1,4 +1,3 @@
-/* OLX Posts Styles */
 .postParentDiv {
   max-width: 1200px;
   margin: 0 auto;
@@ -7,7 +6,6 @@
   min-height: 100vh;
 }
 
-/* Category Section */
 .category-section {
   margin-bottom: 48px;
   background-color: #ffffff;
@@ -46,7 +44,6 @@
   text-decoration: underline;
 }
 
-/* Cards Container */
 .cards {
   display: flex;
   overflow-x: auto;
@@ -74,7 +71,6 @@
   background: #a8a8a8;
 }
 
-/* Individual Card */
 .card {
   flex: 0 0 auto;
   width: 236px;
@@ -94,7 +90,6 @@
   transform: translateY(-2px);
 }
 
-/* Favorite Heart */
 .card .favorite {
   position: absolute;
   top: 12px;
@@ -126,7 +121,6 @@
   fill: #ff6b6b;
 }
 
-/* Image Section */
 .card .image {
   height: 160px;
   display: flex;
@@ -147,7 +141,6 @@
   transform: scale(1.05);
 }
 
-/* Content Section */
 .card .content {
   padding: 16px;
   flex: 1;
@@ -170,8 +163,6 @@
   color: #002f34;
   margin: 0;
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,7 +177,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Date Section */
 .card .date {
   padding: 0 16px 16px;
   display: flex;
@@ -201,7 +191,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Loading State */
 .card.loading {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
@@ -217,7 +206,6 @@
   }
 }
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 48px 24px;
@@ -235,7 +223,6 @@
   margin: 0;
 }
 
-/* Responsive Design */
 @media only screen and (max-width: 768px) {
   .postParentDiv {
     padding: 16px 8px;
@@ -324,7 +311,6 @@
   }
 }
 
-/* Accessibility */
 .card:focus {
   outline: 2px solid #23e5db;
   outline-offset: 2px;
@@ -335,7 +321,6 @@
   outline-offset: 2px;
 }
 
-/* Print Styles */
 @media print {
   .card .favorite {
     display: none;

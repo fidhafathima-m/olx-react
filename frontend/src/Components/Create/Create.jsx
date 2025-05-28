@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Create.css'; // Reuse existing OLX style
+import './Create.css'; 
 import Header from '../Header/Header';
 import { useAuth } from '../../context/auth';
 import { useProductStore } from '../../store/product';
@@ -65,7 +65,6 @@ const Create = () => {
 
           <div className="edit-product-card">
             <form onSubmit={handleSubmit} className="edit-product-form">
-              {/* Details Section */}
               <div className="form-section">
                 <h3 className="section-title">INCLUDE SOME DETAILS</h3>
 
@@ -100,11 +99,8 @@ const Create = () => {
                   </select>
                   {errors.category && <p className="error">{errors.category}</p>}
                 </div>
-
-                
               </div>
 
-              {/* Price Section */}
               <div className="form-section">
                 <h3 className="section-title">SET A PRICE</h3>
                 <div className="form-group">
@@ -126,7 +122,6 @@ const Create = () => {
                 </div>
               </div>
 
-              {/* Photo Upload */}
               <div className="form-section">
                 <h3 className="section-title">UPLOAD PHOTOS</h3>
                 <div className="form-group">
@@ -154,10 +149,7 @@ const Create = () => {
                   )}
                 </div>
               </div>
-
-             
-
-              {/* Buttons */}
+              
               <div className="form-actions">
                 <button 
                   type="button" 

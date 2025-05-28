@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
-import Heart from '../../assets/Heart';
 import './MyAds.css';
 import Header from '../Header/Header';
+import { BsPencilSquare, BsFillTrash3Fill } from "react-icons/bs";
 
 function MyAds() {
   const { user } = useAuth();
@@ -87,14 +87,14 @@ function MyAds() {
                       onClick={() => navigate(`/edit-product/${product._id}`)}
                       title="Edit Ad"
                     >
-                      ✏️
+                      <BsPencilSquare />
                     </button>
                     <button 
                       className="action-btn delete-btn"
                       onClick={() => handleDeleteAd(product._id)}
                       title="Delete Ad"
                     >
-                      🗑️
+                      <BsFillTrash3Fill />
                     </button>
                   </div>
                   <div className="ad-status">

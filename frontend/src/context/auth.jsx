@@ -12,7 +12,7 @@ export function AuthProvider({children}) {
         if(data) {
             setUser(JSON.parse(data));
         } else {
-            setUser(null); // explicitly set to null if no user found
+            setUser(null); 
         }
     }, [])
 

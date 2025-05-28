@@ -1,6 +1,5 @@
-/* OLX Banner Styles */
 .bannerParentDiv {
-  padding-top: 72px; /* Account for fixed header */
+  padding-top: 72px; 
   background-color: #ffffff;
 }
 
@@ -8,7 +7,6 @@
   width: 100%;
 }
 
-/* Menu Bar Styles */
 .menuBar {
   display: flex;
   align-items: center;
@@ -94,7 +92,6 @@
   margin-left: 8px;
 }
 
-/* Banner Image Styles */
 .banner {
   position: relative;
   width: 100%;
@@ -110,7 +107,6 @@
   max-height: 280px;
 }
 
-/* Add some visual enhancement if image fails to load */
 .banner::before {
   content: '';
   position: absolute;
@@ -128,10 +124,9 @@
   opacity: 0.05;
 }
 
-/* Responsive Design */
 @media only screen and (max-width: 768px) {
   .bannerParentDiv {
-    padding-top: 64px; /* Adjust for mobile header height */
+    padding-top: 64px; 
   }
   
   .menuBar {
@@ -178,7 +173,7 @@
   }
   
   .otherQuickOptions {
-    display: none; /* Hide on very small screens for cleaner look */
+    display: none; 
   }
   
   .categoryMenu {
@@ -190,20 +185,18 @@
   }
 }
 
-/* Additional enhancements for better UX */
 .menuBar {
   position: sticky;
-  top: 72px; /* Stick below the header */
+  top: 72px; 
   z-index: 998;
 }
 
 @media only screen and (max-width: 768px) {
   .menuBar {
-    position: static; /* Remove sticky on mobile for better performance */
+    position: static; 
   }
 }
 
-/* Loading state for banner image */
 .banner img {
   transition: opacity 0.3s ease;
 }
@@ -212,7 +205,6 @@
   opacity: 0;
 }
 
-/* Focus states for accessibility */
 .categoryMenu:focus,
 .otherQuickOptions span:focus {
   outline: 2px solid #23e5db;

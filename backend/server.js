@@ -81,7 +81,6 @@ app.get("/api/products", async (req, res) => {
 app.post("/api/products", async (req, res) => {
   const productData = req.body;
 
-  // Check if all required fields are present
   if (!productData.name || !productData.category || !productData.image || !productData.price || !productData.sellerName || !productData.sellerPhone) {
     return res.status(406).json({ success: false, message: "All product fields are required" });
   }

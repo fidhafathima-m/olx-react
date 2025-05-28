@@ -1,11 +1,9 @@
-/* Login Container */
 .login-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Header */
 .login-header {
   background: #002f34;
   padding: 16px 0;
@@ -29,7 +27,6 @@
   transform: scale(1.05);
 }
 
-/* Header Logo - Make it light colored */
 .header-logo {
   transition: all 0.3s ease;
 }
@@ -39,7 +36,6 @@
   transition: all 0.3s ease;
 }
 
-/* Main Content */
 .login-main {
   display: flex;
   justify-content: center;
@@ -72,13 +68,11 @@
   padding: 40px 32px;
 }
 
-/* Form Logo Container */
 .form-logo-container {
   text-align: center;
   margin-bottom: 24px;
 }
 
-/* Form Logo Image - Make it lighter */
 .form-logo-image {
   width: 120px;
   height: auto;
@@ -94,7 +88,6 @@
   opacity: 1;
 }
 
-/* Typography */
 .login-title {
   font-size: 28px;
   font-weight: 700;
@@ -110,7 +103,6 @@
   margin: 0 0 32px 0;
 }
 
-/* Form */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -188,7 +180,6 @@
   transform: translateY(0);
 }
 
-/* Footer */
 .login-footer {
   margin-top: 32px;
   text-align: center;
@@ -213,7 +204,6 @@
   text-decoration: underline;
 }
 
-/* Alternative approach for PNG logo lightening */
 .form-logo-image.light-version {
   filter: 
     brightness(1.4)
@@ -223,7 +213,6 @@
     hue-rotate(15deg);
 }
 
-/* If you want even lighter */
 .form-logo-image.extra-light {
   filter: 
     brightness(1.6)
@@ -232,7 +221,6 @@
     opacity(0.8);
 }
 
-/* Responsive Design */
 @media (max-width: 480px) {
   .login-main {
     padding: 16px;
@@ -275,20 +263,4 @@
   .form-logo-image {
     width: 90px;
   }
-}
-
-/* Animation */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-card {
-  animation: slideIn 0.5s ease-out;
 }

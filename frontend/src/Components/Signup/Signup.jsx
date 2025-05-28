@@ -134,7 +134,6 @@ export default function Signup() {
 
   return (
     <div className="login-container">
-      {/* Header */}
       <div className="login-header">
         <div className="header-content">
           <div className="logo-section" onClick={() => navigate('/')}>
@@ -145,7 +144,6 @@ export default function Signup() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="login-main">
         <div className="login-card">
           <div className="login-form-container">

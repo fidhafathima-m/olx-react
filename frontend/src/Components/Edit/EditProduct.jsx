@@ -74,7 +74,6 @@ function EditProduct() {
       });
       const result = await res.json();
       if (result.success) {
-        // Show success message
         const successDiv = document.createElement('div');
         successDiv.className = 'success-toast';
         successDiv.textContent = 'Product updated successfully!';

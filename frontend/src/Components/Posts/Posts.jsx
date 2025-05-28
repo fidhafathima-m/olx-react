@@ -13,7 +13,6 @@ function Posts() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Group products by category
   const productsByCategory = products.reduce((acc, product) => {
     if (!acc[product.category]) {
       acc[product.category] = [];
