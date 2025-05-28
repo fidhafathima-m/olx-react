@@ -5,12 +5,14 @@ const AuthContext = createContext();
 
 export function AuthProvider({children}) {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(undefined);
 
     useEffect(() => {
         const data = localStorage.getItem('user');
         if(data) {
             setUser(JSON.parse(data));
+        } else {
+            setUser(null); // explicitly set to null if no user found
         }
     }, [])
 

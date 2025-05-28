@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-
-import Logo from '../../olx-logo.png';
-import './Signup.css';
-import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
+import OlxLogo from '../../assets/OlxLogo';
+import './Signup.css';
 
 export default function Signup() {
-  const {login} = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [signup, setSignup] = useState({
     name: '', email: '', phone: '', password: ''
-  })
+  });
 
   const [errors, setErrors] = useState({
     name: '', email: '', phone: '', password: ''
-  })
+  });
 
   const handleChanges = (e) => {
-    const {name, value} = e.target;
-    setSignup(prev => ({...prev, [name]: value}));
-    setErrors(prev => ({...prev, [name]: ''}));
-  }
+    const { name, value } = e.target;
+    setSignup(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
+  };
 
   const validate = () => {
   let isValid = true;
@@ -101,22 +100,23 @@ export default function Signup() {
   return isValid;
 };
 
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!validate()) return;
+    if (!validate()) return;
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/signup`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(signup)
-      })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signup)
+      });
       const data = await res.json();
 
-      if(!res.ok) {
-        if(res.status === 406) {
-          if(data.message.toLowerCase().includes('email')) {
-            setErrors(prev => ({...prev, email: data.message}));
+      if (!res.ok) {
+        if (res.status === 406) {
+          if (data.message.toLowerCase().includes('email')) {
+            setErrors(prev => ({ ...prev, email: data.message }));
           } else {
             alert(data.message);
           }
@@ -125,75 +125,63 @@ export default function Signup() {
         throw new Error(data.message || 'Signup failed');
       }
 
-        login({
-          name: data.data.name,
-          email: data.data.email,
-          phone: data.data.phone
-        })
-        navigate('/');
-    } catch(error) {
-      console.error('Signup failed:', error);
-      alert(error.message || 'Something went wrong. Please try again later.');
-    } 
-  }
+      login(data.data);
+      navigate('/');
+    } catch (error) {
+      alert(error.message || 'Something went wrong.');
+    }
+  };
 
   return (
-    <div>
-      <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo} onClick={() => navigate('/')}></img>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">Username</label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            id="fname"
-            name="name"
-            value={signup.name}
-            onChange={handleChanges}
-          />
-          {errors.name && <p className='error'>{errors.name}</p>}
-          <br />
-          <label htmlFor="fname">Email</label>
-          <br />
-          <input
-            className="input"
-            type="email"
-            id="fname"
-            name="email"
-            value={signup.email}
-            onChange={handleChanges}
-          />
-          {errors.email && <p className='error'>{errors.email}</p>}
-          <br />
-          <label htmlFor="lname">Phone</label>
-          <br />
-          <input
-            className="input"
-            type="number"
-            id="lname"
-            name="phone"
-            value={signup.phone}
-            onChange={handleChanges}
-          />
-          {errors.phone && <p className='error'>{errors.phone}</p>}
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
-          <input
-            className="input"
-            type="password"
-            id="lname"
-            name="password"
-            value={signup.password}
-            onChange={handleChanges}
-          />
-          {errors.password && <p className='error'>{errors.password}</p>}
-          <br />
-          <br />
-          <button type='submit'>Signup</button>
-        </form>
-        <a href='/login'>Login</a>
+    <div className="login-container">
+      {/* Header */}
+      <div className="login-header">
+        <div className="header-content">
+          <div className="logo-section" onClick={() => navigate('/')}>
+            <div className="header-logo">
+              <OlxLogo />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="login-main">
+        <div className="login-card">
+          <div className="login-form-container">
+            <h1 className="login-title">Create Account</h1>
+            <p className="login-subtitle">Sign up to get started</p>
+
+            <form onSubmit={handleSubmit} className="login-form">
+              {['name', 'email', 'phone', 'password'].map(field => (
+                <div className="form-group" key={field}>
+                  <input
+                    className={`form-input ${errors[field] ? 'error-input' : ''}`}
+                    type={field === 'password' ? 'password' : (field === 'email' ? 'email' : 'text')}
+                    name={field}
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    value={signup[field]}
+                    onChange={handleChanges}
+                  />
+                  {errors[field] && <span className="error-text">{errors[field]}</span>}
+                </div>
+              ))}
+
+              <button type="submit" className="login-button">
+                Sign Up
+              </button>
+            </form>
+
+            <div className="login-footer">
+              <p className="signup-text">
+                Already have an account?{' '}
+                <span className="signup-link" onClick={() => navigate('/login')}>
+                  Login
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

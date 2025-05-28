@@ -1,57 +1,110 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Create.css'; // Reuse existing OLX style
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import './EditProduct.css';
 import Header from '../Header/Header';
-import { useAuth } from '../../context/auth';
-import { useProductStore } from '../../store/product';
 
-const categories = [
-  'Electronics', 'Cars', 'Properties', 'Mobiles', 'Jobs',
-  'Bikes', 'Fashion', 'Books', 'Furniture', 'Sports', 'Pets', 'Services', 'Other'
-];
-
-const Create = () => {
-  const { user } = useAuth();
-  const createProduct = useProductStore(state => state.createProduct);
+function EditProduct() {
+  const { id } = useParams();
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
-    name: '', category: '', price: '', image: '', 
+    name: '',
+    category: '',
+    price: '',
+    image: '',
+    description: '',
+    location: '',
   });
-  const [errors, setErrors] = useState({});
-  const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    setErrors(prev => ({ ...prev, [name]: '' }));
-  };
+  const categories = [
+    'Electronics',
+    'Cars',
+    'Properties',
+    'Mobiles',
+    'Jobs',
+    'Bikes',
+    'Fashion',
+    'Books',
+    'Furniture',
+    'Sports',
+    'Pets',
+    'Services',
+    'Other'
+  ];
 
-  const validate = () => {
-    const newErrors = {};
-    if (!form.name.trim()) newErrors.name = 'Title is required';
-    if (!form.category) newErrors.category = 'Category is required';
-    if (!form.price || form.price <= 0) newErrors.price = 'Valid price required';
-    if (!form.image.trim()) newErrors.image = 'Image URL is required';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async e => {
-    console.log('clicked')
-    e.preventDefault();
-    if (!validate()) return;
-    setSubmitting(true);
-    const productData = {
-      ...form,
-      sellerName: user.name,
-      sellerPhone: user.phone
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
+        const data = await response.json();
+        if (data.success) {
+          const { name, category, price, image, description, location } = data.data;
+          setForm({ 
+            name: name || '', 
+            category: category || '', 
+            price: price || '', 
+            image: image || '',
+            description: description || '',
+            location: location || ''
+          });
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error('Failed to fetch product', err);
+        setLoading(false);
+      }
     };
-    const res = await createProduct(productData);
-    setSubmitting(false);
-    if (res.success) navigate('/');
-    else alert(res.message || 'Failed to create ad.');
+    fetchProduct();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const result = await res.json();
+      if (result.success) {
+        // Show success message
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-toast';
+        successDiv.textContent = 'Product updated successfully!';
+        document.body.appendChild(successDiv);
+        setTimeout(() => {
+          document.body.removeChild(successDiv);
+          navigate('/my-ads');
+        }, 2000);
+      }
+    } catch (err) {
+      console.error('Error updating product:', err);
+      alert('Error updating product. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="edit-product-container">
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Loading product details...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -59,16 +112,21 @@ const Create = () => {
       <div className="edit-product-container">
         <div className="edit-product-wrapper">
           <div className="edit-product-header">
-            <h1 className="edit-product-title">Create a New Ad</h1>
-            <p className="edit-product-subtitle">Fill in the details below</p>
+            <button 
+              className="back-btn" 
+              onClick={() => navigate('/my-ads')}
+            >
+              ← Back to My Ads
+            </button>
+            <h1 className="edit-product-title">Edit your ad</h1>
+            <p className="edit-product-subtitle">Update your product details</p>
           </div>
 
           <div className="edit-product-card">
             <form onSubmit={handleSubmit} className="edit-product-form">
-              {/* Details Section */}
               <div className="form-section">
                 <h3 className="section-title">INCLUDE SOME DETAILS</h3>
-
+                
                 <div className="form-group">
                   <label htmlFor="name">Ad Title *</label>
                   <input
@@ -81,7 +139,6 @@ const Create = () => {
                     required
                   />
                   <small className="char-count">{form.name.length}/70</small>
-                  {errors.name && <p className="error">{errors.name}</p>}
                 </div>
 
                 <div className="form-group">
@@ -98,15 +155,14 @@ const Create = () => {
                       <option key={cat} value={cat}>{cat}</option>
                     ))}
                   </select>
-                  {errors.category && <p className="error">{errors.category}</p>}
                 </div>
 
                 
               </div>
 
-              {/* Price Section */}
               <div className="form-section">
                 <h3 className="section-title">SET A PRICE</h3>
+                
                 <div className="form-group">
                   <label htmlFor="price">Price *</label>
                   <div className="price-input-wrapper">
@@ -119,16 +175,16 @@ const Create = () => {
                       placeholder="0"
                       type="number"
                       min="0"
+                      step="1"
                       required
                     />
                   </div>
-                  {errors.price && <p className="error">{errors.price}</p>}
                 </div>
               </div>
 
-              {/* Photo Upload */}
               <div className="form-section">
                 <h3 className="section-title">UPLOAD PHOTOS</h3>
+                
                 <div className="form-group">
                   <label htmlFor="image">Image URL *</label>
                   <input
@@ -140,12 +196,11 @@ const Create = () => {
                     type="url"
                     required
                   />
-                  {errors.image && <p className="error">{errors.image}</p>}
                   {form.image && (
                     <div className="image-preview">
                       <img
+                        alt="Product preview"
                         src={form.image}
-                        alt="Preview"
                         onError={(e) => {
                           e.target.src = 'https://via.placeholder.com/200x200?text=Image+Not+Found';
                         }}
@@ -155,28 +210,29 @@ const Create = () => {
                 </div>
               </div>
 
-             
 
-              {/* Buttons */}
               <div className="form-actions">
                 <button 
                   type="button" 
-                  className="cancel-btn"
-                  onClick={() => navigate('/')}
-                  disabled={submitting}
+                  className="cancel-btn" 
+                  onClick={() => navigate('/my-ads')}
+                  disabled={saving}
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
-                  className="save-btn"
-                  disabled={submitting}
+                  className="save-btn" 
+                  disabled={saving}
                 >
-                  {submitting ? (
+                  {saving ? (
                     <>
-                      <span className="btn-spinner"></span> Posting...
+                      <span className="btn-spinner"></span>
+                      Updating...
                     </>
-                  ) : 'Post Ad'}
+                  ) : (
+                    'Update Ad'
+                  )}
                 </button>
               </div>
             </form>
@@ -185,6 +241,6 @@ const Create = () => {
       </div>
     </>
   );
-};
+}
 
-export default Create;
+export default EditProduct;

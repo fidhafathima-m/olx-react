@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
-
-import Logo from '../../olx-logo.png';
-import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
+import Logo from '../../olx-logo.png';
+import OlxLogo from '../../assets/OlxLogo'
+import './Login.css'
 
 function Login() {
   const {login} = useAuth();
   const navigate = useNavigate();
-
   const [user, setUser] = useState({
     email: '', password: ''
   })
   const [error, setError] = useState({
     email: '', password: ''
   })
-
+  
   const handleChange = (e) => {
     const {name, value} = e.target;
     setUser(prev => ({...prev, [name]: value}))
     setError(prev => ({...prev, [name]: ''}))
   }
-
+  
   const validate = () => {
     let isValid = true;
-    const newErrors = {name: '', email: ''}
+    const newErrors = {email: '', password: ''}
     if(!user.email.trim()) {
       newErrors.email = 'Email required';
       isValid = false;
@@ -36,25 +35,21 @@ function Login() {
       newErrors.password = 'Password is required.';
       isValid = false;
     }
-
     setError(newErrors);
     return isValid;
-
   }
-
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
     if(!validate()) return;
-
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
         method: 'POST',
-        headers: {'Content-type': 'application/json'}, 
+        headers: {'Content-type': 'application/json'},
         body: JSON.stringify(user),
       })
       const data = await res.json();
       console.log('data: ', data)
-
       if(data.success) {
         login(data.data);
         navigate('/');
@@ -67,38 +62,70 @@ function Login() {
   }
 
   return (
-    <div>
-      <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo} onClick={() => navigate('/')}></img>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">Email</label>
-          <br />
-          <input
-            className="input"
-            type="email"
-            id="fname"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-          {error.email && <p className='error'>{error.email}</p>}
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
-          <input
-            className="input"
-            type="password"
-            id="lname"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-          />
-          {error.password && <p className='error'>{error.password}</p>}
-          <br />
-          <br />
-          <button type='submit'>Login</button>
-        </form>
-        <a href='/signup'>Signup</a>
+    <div className="login-container">
+      {/* Header */}
+      <div className="login-header">
+        <div className="header-content">
+          <div className="logo-section" onClick={() => navigate('/')}>
+            {/* Use your OlxLogo component with light styling for header */}
+            <div className="header-logo">
+              <OlxLogo onClick={() => navigate('/')} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="login-main">
+        <div className="login-card">
+          <div className="login-form-container">
+            
+            
+            <h1 className="login-title">Welcome back</h1>
+            <p className="login-subtitle">Login to your account</p>
+            
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <input
+                  className={`form-input ${error.email ? 'error-input' : ''}`}
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  required
+                />
+                {error.email && <span className="error-text">{error.email}</span>}
+              </div>
+
+              <div className="form-group">
+                <input
+                  className={`form-input ${error.password ? 'error-input' : ''}`}
+                  type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  required
+                />
+                {error.password && <span className="error-text">{error.password}</span>}
+              </div>
+
+              <button type="submit" className="login-button">
+                Login
+              </button>
+            </form>
+
+            <div className="login-footer">
+              <p className="signup-text">
+                Don't have an account? 
+                <span className="signup-link" onClick={() => navigate('/signup')}>
+                  Sign up
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
